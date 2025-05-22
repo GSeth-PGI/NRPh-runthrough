@@ -1,0 +1,243 @@
+I want to create an html game about the NRPh Algorithm for newborn resuscitation
+
+This algorithm shows what steps to take every after assessments which helps Newborn Pediatricians in decision making especially during the critical moment of neonatal resuscitation.
+
+I want to create a game that will serve as a theoretical practice drill and a refresher course for both medical students and licensed physicians to enjoy
+
+Complete Flow:
+(With a pathway tracker)
+global rules: 
+1. Game over sequence: The game will end immediately and inform the player that his answer is wrong and offer to try again. Trying again means going back to phase 1.
+2. If the player clicks the wrong button, the game over sequence will commence
+3. Buttons are always in random order
+4. Victory sequence: The game will congratulate the player saying "You have completed this pathway!" and will offer to try again
+
+Phase 1:
+There is a display that says "The mother has given birth, what is your next step?" and buttons for decision making will appear. 
+
+These buttons will include:
+-Immediate thorough drying and quick assessment
+-Skin to skin contact
+-Properly-timed cord clamping
+-Non-separation of mother and baby
+-Early exclusive breastfeeding
+-Monitoring of mother-baby diad
+
+The correct answer is immediate thorough drying and quick assessment. Once the button is pressed, if the wrong choice is selected, the game will immediately end saying "Incorrect" and a try again button will appear, which goes back to the first scene. If the correct choice is made, the buttons will disappear and will move to the next phase. 
+
+Phase 2
+The game will randomly show the player between these 2 scenarios:
+
+Phase 2 Scenario 1: There no apnea/gasping or not limp upon assessment
+Phase 2 Scenario 2: There is apnea/gasping or limp upon assessment
+
+Both of these scenarios will ask: What is your next step?
+
+Flow for Phase 2 Scenario 1:
+The buttons that would appear would include, but they are arranged randomly and the player has to select them in the correct order:
+-Skin to skin contact
+-Properly-timed cord clamping
+-Non-separation of mother and baby
+-Early exclusive breastfeeding
+-Monitoring of mother-baby diad
+
+If the incorrect order was selected, the game will immediately end and will say "Incorrect order" revealing the correct next immediate step and offer to try again. Trying again means going back to Phase 1.
+
+If the order is correct, the display will move to the next phase. With the buttons disappearing.
+
+Phase2:Scenario1:Phase3:
+
+This phase will randomly choose between the two scenarios:
+
+Phase2:Scenario1:Phase3:Scenario1:
+"The baby is small, what is your next step?"
+
+For this scenario, the buttons will include:
+-Kangaroo care
+-Lactation support
+
+The player has to select the correct order. If the incorrect order was selected, the game will immediately end and will say "Incorrect order" revealing the correct next immediate step and offer to try again. Trying again means going back to Phase 1
+
+With the correct order, the game will Congratulate the player and say that they have completed this certain pathway, and offer to try again.
+
+Phase2:Scenario1:Phase3:Scenario2:
+"The baby's weight is within normal range, what is your next step?"
+
+For this scenario, the buttons in random order will include:
+-Kangaroo care
+-Lactation support
+
+This scenario skips the Kangaroo care, and the player must choose Lactation support as the correct answer.
+
+If the player selects Kangaroo care, the game will immediately end and will say "Kangaroo care not necessary" revealing the correct next immediate step and offer to try again.
+
+---------------------------
+
+Phase 2 Scenario 2: There is apnea/gasping or limp upon assessment
+
+For this scenario, the buttons will include:
+-Call for help
+-Change wet linen
+-Clamp and cut the cord
+-Transfer to warmer
+-Position airway
+-Clear secretions if needed
+-PPV
+-SPO2 monitoring
+
+The player has to select in correct order, otherwise the game over sequence will commence.
+
+If the correct sequence was selected, the game will proceed to the next phase:
+
+Phase2:Scenario2:Phase3:
+The game will randomly show the player between these 2 scenarios:
+Phase2:Scenario2:Phase3:Scenario1
+Phase2:Scenario2:Phase3:Scenario2
+
+Phase2:Scenario2:Phase3:Scenario1:
+"If there is no apnea or gasping, or if heart rate is >100 bpm, what is your next step?"
+
+The buttons for this would include:
+-Check breathing and cyanosis
+-Do Ventilation Corrective Steps
+
+The correct answer is check for breathing and cyanosis. 
+
+This will lead to the next phase
+
+Phase2:Scenario2:Phase3:Scenario1:Phase4:
+The game will randomly show the player between these 2 scenarios:
+Phase2:Scenario2:Phase3:Scenario1:Phase4:Scenario1
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Scenario2
+
+Phase2:Scenario2:Phase3:Scenario1:Phase4:Scenario1:
+"There is no labored breathing or persistent cyanosis, what is your next step?"
+
+For this scenario, the buttons in random order will include:
+-Stat Post-resuscitation care
+-Transport
+-Team debriefing
+-Lactation support
+-Kangaroo care (not a correct answer)
+
+The player has to select in the correct order and the game will proceed to Victory sequence.
+
+Phase2:Scenario2:Phase3:Scenario1:Phase4:Scenario2:
+"There is labored breathing or persistent cyanosis, what is your next step?"
+
+For this scenario, the buttons in random order will include: 
+-Position and clear airway
+-SPO2 monitoring
+-Supplemental O2 as needed
+-Consider CPAP
+
+Has to be selected in the correct order.
+Once done the game will proceed to the next phase, this time goes back to Phase2:Scenario2:Phase3:Scenario1:Phase4:Scenario1 and its respective sequence
+
+-----------------------
+
+Phase2:Scenario2:Phase3:Scenario2:
+"If there is apnea or gasping, or if heart rate is <100 bpm, what is your next step?"
+
+The buttons for this would include:
+-Check breathing and cyanosis
+-Do Ventilation Corrective Steps
+
+The correct answer is Do Ventilation Corrective Steps
+
+This will lead to the next phase
+
+Phase2:Scenario2:Phase3:Scenario2:Phase4
+"What are the Ventilation Corrective Steps? Choose all that applies"
+
+The buttons for this would include:
+-Mask adjustment
+-Reposition airway
+-Suction mouth and nose
+-Open mouth
+-Pressure increase
+-Airway alternative
+-Intubate (Wrong answer)
+-PPV (Wrong answer)
+-100% O2 (Wrong answer)
+-CPAP (Wrong answer)
+
+The player has to select all the correct answers, otherwise the game won't proceed.
+
+Once done, the game will proceed to the next phase
+
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5
+The game will randomly show the player between these 2 scenarios:
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario1
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario2
+
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario1:
+"The heart rate is >60 bpm, What is your next step?"
+
+the buttons would include:
+-PPV
+-SPO2 monitoring
+-100% O2 (Wrong answer)
+-UVC insertion (Wrong answer)
+
+The player has to select all the correct answers, otherwise the game won't proceed.
+
+Once done, the game will proceed to the next phase which goes back to Phase2:Scenario2:Phase3
+
+---------------------------
+
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario2:
+
+"The heart rate is <60 bpm, What is your next step? Select all that applies"
+
+the buttons would include:
+-intubate
+-Coordinated PPV and chest compressions
+-100% O2
+-Consider UVC Insertion
+-CPAP (Wrong answer)
+-Post-resuscitation care (Wrong answer)
+
+The player has to select all the correct answers, otherwise the game won't proceed.
+
+Once done, the game will proceed to the next phase
+
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario2:Phase6
+The game will randomly show the player between these 2 scenarios:
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario2:Phase6:Scenario1
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario2:Phase6:Scenario2
+----------------------
+
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario2:Phase6:Scenario1
+"The heart rate is >60 beats per minute, what is now your next step? Select all that applies" 
+
+the buttons would include:
+-PPV
+-SPO2 monitoring
+-Post-resuscitation care (Wrong answer)
+-Team debriefing (Wrong answer)
+
+The player has to select all the correct answers, otherwise the game won't proceed.
+
+Once done, the game will proceed to the next phase which goes back to Phase2:Scenario2:Phase3
+
+--------------------------
+
+Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario2:Phase6:Scenario2
+"The heart rate is still <60 beats per minute, what is your next step? Select all that applies"
+
+the buttons would include:
+-IV epinephrine
+-Consider hypovolemia
+-Consider pneumothorax
+-CPAP (Wrong answer)
+-Post-resuscitation care (Wrong answer)
+-Team debriefing (Wrong answer)
+
+The player has to select all the correct answers, otherwise the game won't proceed.
+
+Once done, the game will proceed to the next phase which goes back to Phase2:Scenario2:Phase3:Scenario2:Phase4:Phase5:Scenario2:Phase6:Scenario1
+
+Thus completing the flow of all phases.
+
+I want you to review the game conditions and functions and summarize into a coherent game flow, double check if all phases were covered and closed and reassess the feasibility, ask for clarifications and when you think you have everything you need or when everything is ready, create an html code that I can copy and paste into my notepad to create my game.

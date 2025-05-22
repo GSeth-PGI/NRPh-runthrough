@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NRPh Newborn Resuscitation Algorithm Runthrough</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f2f9ff;
+      background-image: url('NRPh background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    .button-container {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn {
+      padding: 10px 20px;
+      font-size: 12px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      min-width: 240px;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .btn.selected {
+      background-color: #28a745 !important;
+    }
+    .review {
+      margin-top: 20px;
+      color: green;
+      min-height: 24px;
+    }
+    .gameover {
+      color: red;
+      font-weight: bold;
+      margin-top: 20px;
+      min-height: 24px;
+    }
+    .tracker {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+.utility-btn {
+  padding: 8px 16px;
+  font-size: 12px;
+  background-color: #6c757d;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.utility-btn:hover {
+  background-color: #5a6268;
+}
+
+  </style>
+</head>
+<body>
+  <div class="tracker" id="tracker">Phase 1</div>
+  <h2 id="scenario">The mother has given birth, what is your next step?</h2>
+  <div class="button-container" id="buttonContainer"></div>
+  <div class="review" id="review"></div>
+  <div class="gameover" id="gameover"></div>
+
+  <script>
+    const phaseTracker = document.getElementById("tracker");
+    const scenarioText = document.getElementById("scenario");
+    const buttonContainer = document.getElementById("buttonContainer");
+    const reviewText = document.getElementById("review");
+    const gameoverText = document.getElementById("gameover");
+
+    let gamePhase = "Phase1";
+    let selectedSequence = [];
+    let correctSequence = [];
+    let multiSelectMode = false; // true if "select all then confirm" mechanic is needed
+    let confirmedSelections = [];
+    let awaitingConfirm = false;
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+
+
+    // Strict terminologies and phases according to your original flow:
+    const phases = {
+        Phase1: {
+        title: "Welcome to the NRPh Algorithm Runthrough",
+        scenario: "This runthrough is intended for practice and refresher of the NRPh Algorithm. Thank you",
+        buttons: [
+          "Start"
+        ],
+        correct: ["Start"],
+        next: function () {
+          return "Phase1V1";
+        },
+        multiSelect: false,
+      },      
+
+        Phase1V1: {
+        title: "Birth",
+        scenario: "The mother has given birth, what is your next step?",
+        buttons: [
+          "Immediate drying and assessment",
+          "Skin to skin contact",
+          "Properly-timed cord clamping",
+          "Non-separation of mother and baby",
+          "Early exclusive breastfeeding",
+          "Monitoring of mother-baby diad"
+        ],
+        correct: ["Immediate drying and assessment"],
+        next: function () {
+          return Math.random() < 0.5 ? "Phase2Scenario1" : "Phase2Scenario2";
+        },
+        multiSelect: false,
+      },
+
+      Phase2Scenario1: {
+        title: "Bith → No apnea",
+        scenario: "There is no apnea/gasping or limp upon assessment. What is your next step? Select all in correct order.",
+        buttons: [
+          "Skin to skin contact",
+          "Properly-timed cord clamping",
+          "Non-separation of mother and baby",
+          "Early exclusive breastfeeding",
+          "Monitoring of mother-baby diad"
+        ],
+        correct: [
+          "Skin to skin contact",
+          "Properly-timed cord clamping",
+          "Non-separation of mother and baby",
+          "Early exclusive breastfeeding",
+          "Monitoring of mother-baby diad"
+        ],
+        next: function () {
+          return Math.random() < 0.5
+            ? "Phase2Scenario1Phase3Scenario1"
+            : "Phase2Scenario1Phase3Scenario2";
+        },
+        multiSelect: true,
+      },
+
+      Phase2Scenario1Phase3Scenario1: {
+        title: "Birth → No apnea → Newborn care → Small baby",
+        scenario: "The baby is small, what is your next step? Select all in correct order.",
+        buttons: [
+          "Kangaroo care",
+          "Lactation support"
+        ],
+        correct: [
+          "Kangaroo care",
+          "Lactation support"
+        ],
+        next: function () {
+          return "Victory";
+        },
+        multiSelect: true,
+      },
+
+      Phase2Scenario1Phase3Scenario2: {
+        title: "Birth → No apnea → Newborn care → Normal baby",
+        scenario: "The baby's weight is within normal range, what is your next step?",
+        buttons: [
+          "Kangaroo care",
+          "Lactation support"
+        ],
+        correct: [
+          "Lactation support"
+        ],
+        next: function () {
+          return "Victory";
+        },
+        multiSelect: false,
+      },
+
+      Phase2Scenario2: {
+        title: "Birth → With apnea → Resuscitation",
+        scenario: "There is apnea/gasping or limp upon assessment. What is your next step? Select all in correct order.",
+        buttons: [
+          "Call for help", "Change wet linen", "Clamp and cut the cord",
+          "Transfer to warmer", "Position airway", "Clear secretions if needed",
+          "PPV", "SPO2 monitoring"
+        ],
+        correct: [
+          "Call for help",
+          "Change wet linen",
+          "Clamp and cut the cord",
+          "Transfer to warmer",
+          "Position airway",
+          "Clear secretions if needed",
+          "PPV",
+          "SPO2 monitoring"
+        ],
+        next: function () {
+          return Math.random() < 0.5
+            ? "Phase2Scenario2Phase3Scenario1"
+            : "Phase2Scenario2Phase3Scenario2";
+        },
+        multiSelect: true,
+      },
+
+      Phase2Scenario2Phase3Scenario1: {
+        title: "Birth → With apnea → Resuscitation → Resolved apnea",
+        scenario: "If there is no more apnea or gasping, or if heart rate is >100 bpm, what is your next step?",
+        buttons: [
+          "Check breathing and cyanosis",
+          "Do Ventilation Corrective Steps"
+        ],
+        correct: ["Check breathing and cyanosis"],
+        next: function () {
+          return Math.random() < 0.5
+            ? "Phase2Scenario2Phase3Scenario1Phase4Scenario1"
+            : "Phase2Scenario2Phase3Scenario1Phase4Scenario2";
+        },
+        multiSelect: false,
+      },
+
+      Phase2Scenario2Phase3Scenario1Phase4Scenario1: {
+        title: "Birth → With apnea → Resuscitation → Resolved apnea → No labored breathing",
+        scenario: "There is no labored breathing or persistent cyanosis, what is your next step? Select all in correct order.",
+        buttons: [
+          "Stat Post-resuscitation care",
+          "Transport",
+          "Team debriefing",
+          "Lactation support"
+        ],
+        correct: [
+          "Stat Post-resuscitation care",
+          "Transport",
+          "Team debriefing",
+          "Lactation support"
+        ],
+        next: function () {
+          return "Victory";
+        },
+        multiSelect: true,
+      },
+
+      Phase2Scenario2Phase3Scenario1Phase4Scenario2: {
+        title: "Birth → With apnea → Resuscitation → Resolved apnea → With labored breathing",
+        scenario: "There is labored breathing or persistent cyanosis, what is your next step? Select all in correct order.",
+        buttons: [
+          "Position and clear airway",
+          "SPO2 monitoring",
+          "Supplemental O2 as needed",
+          "Consider CPAP"
+        ],
+        correct: [
+          "Position and clear airway",
+          "SPO2 monitoring",
+          "Supplemental O2 as needed",
+          "Consider CPAP"
+        ],
+        next: function () {
+          return "Phase2Scenario2Phase3Scenario1Phase4Scenario1";
+        },
+        multiSelect: true,
+      },
+
+      Phase2Scenario2Phase3Scenario2: {
+        title: "Birth → With apnea → Resuscitation → unresolved apnea",
+        scenario: "If there is apnea or gasping, or if heart rate is <100 bpm, what is your next step?",
+        buttons: ["Check breathing and cyanosis", "Do Ventilation Corrective Steps"],
+        correct: ["Do Ventilation Corrective Steps"],
+        multiSelect: false,
+        next: function () {
+          return "Phase4";
+        },
+        multiSelect: false,
+      },
+      Phase4: {
+        title: "Birth → With apnea → PPV → unresolved apnea → Ventilation Correction",
+        scenario: "What are the Ventilation Corrective Steps? Select what applies in correct order",
+        buttons: [
+          "Mask adjustment", "Reposition airway", "Suction mouth and nose", "Open mouth", "Pressure increase", "Airway alternative",
+          "100% O2", "CPAP"
+        ],
+        correct: [
+          "Mask adjustment", "Reposition airway", "Suction mouth and nose", "Open mouth", "Pressure increase", "Airway alternative"
+        ],
+        next: function () {
+          return Math.random() < 0.5
+            ? "Phase2Scenario2Phase3Scenario1"
+            : "Phase5Scenario2";
+        },
+        multiSelect: true,
+      },
+        
+      Phase5Scenario1: {
+        title: "Birth → With apnea → PPV → unresolved apnea → Ventilation Correction → Heart rate >60",
+        scenario: "The heart rate is >60 bpm, What is your next step?",
+        buttons: ["PPV", "SPO2 monitoring", "100% O2", "UVC insertion"],
+        correct: ["PPV", "SPO2 monitoring"],
+        next: function () {
+          return "Phase2Scenario2Phase3Scenario2";
+        },
+        multiSelect: true,
+      },
+        
+      Phase5Scenario2: {
+        title: "Birth → With apnea → PPV → unresolved apnea → Ventilation Correction → Heart rate <60",
+        scenario: "The heart rate is <60 bpm, What is your next step? Select what applies in correct order",
+        buttons: ["Intubate", "Coordinated PPV & chest compressions", "100% O2", "Consider UVC Insertion", "CPAP", "Post-resuscitation care"],
+        correct: ["Intubate", "Coordinated PPV & chest compressions", "100% O2", "Consider UVC Insertion"],
+        next: function () {
+          return Math.random() < 0.5
+            ? "Phase2Scenario2Phase3Scenario1"
+            : "Phase6Scenario2";
+        },
+        multiSelect: true,
+      },
+        
+      Phase6Scenario1: {
+        title: "To edit PHase 6",
+        scenario: "The heart rate is >60 beats per minute, what is now your next step? Select all in correct order",
+        buttons: ["PPV", "SPO2 monitoring", "Post-resuscitation care", "Team debriefing"],
+        correct: ["PPV", "SPO2 monitoring"],
+        next: function () {
+          return "Phase2Scenario2Phase3Scenario2";
+        },
+        multiSelect: true,
+      },
+        
+      Phase6Scenario2: {
+        title: "Birth → With apnea → PPV → unresolved apnea → Ventilation Correction → Heart rate <60 → Intubate and Compressions → Heart rate <60",
+        scenario: "The heart rate is still <60 beats per minute, what is your next step? Select all in order",
+        buttons: ["IV epinephrine", "Consider hypovolemia", "Consider pneumothorax", "CPAP", "Post-resuscitation care"],
+        correct: ["IV epinephrine", "Consider hypovolemia", "Consider pneumothorax"],
+        next: function () {
+          return "Phase2Scenario2Phase3Scenario1";
+        },
+        multiSelect: true,
+      },
+        
+ 
+
+      Victory: {
+        title: "Awesome!",
+        scenario: "🎉 Congratulations! You have successfully completed the newborn resuscitation runthrough.",
+        buttons: ["Restart Runthrough"],
+        correct: ["Restart Runthrough"],
+        next: function () {
+          return "Phase1";
+        },
+        multiSelect: false,
+      },
+
+      End: {
+        title: "End",
+        scenario: "The game has ended.",
+        buttons: ["Restart Game"],
+        correct: ["Restart Game"],
+        next: function () {
+          return "Phase1";
+        },
+        multiSelect: false,
+      }
+    };
+
+    // Load phase - renders scenario and buttons
+    function loadPhase(phaseKey) {
+      if (!phases[phaseKey]) {
+        console.warn(`Unknown phase key: ${phaseKey}. Falling back to End phase.`);
+        phaseKey = "End";
+      }
+
+      gamePhase = phaseKey;
+      selectedSequence = [];
+      confirmedSelections = [];
+      awaitingConfirm = false;
+      reviewText.innerText = "";
+      gameoverText.innerText = "";
+
+      const phase = phases[phaseKey];
+      phaseTracker.innerText = phase.title;
+      scenarioText.innerText = phase.scenario;
+      buttonContainer.innerHTML = "";
+
+      correctSequence = phase.correct;
+      multiSelectMode = !!phase.multiSelect;
+
+      if (multiSelectMode) {
+        // Show all buttons as toggle/selectable
+        const shuffled = shuffle([...phase.buttons]);
+        shuffled.forEach(label => {
+          const btn = document.createElement("button");
+          btn.className = "btn";
+          btn.innerText = label;
+          btn.onclick = () => toggleSelection(btn, label);
+          buttonContainer.appendChild(btn);
+        });
+
+        // Show confirm button
+        const confirmBtn = document.createElement("button");
+        confirmBtn.className = "btn";
+        confirmBtn.innerText = "Confirm Selection";
+        confirmBtn.onclick = confirmSelection;
+        buttonContainer.appendChild(confirmBtn);
+
+      } else {
+        // Single-select mode: each click is final answer
+        const shuffled = shuffle([...phase.buttons]);
+        shuffled.forEach(label => {
+          const btn = document.createElement("button");
+          btn.className = "btn";
+          btn.innerText = label;
+          btn.onclick = () => singleSelect(label);
+          buttonContainer.appendChild(btn);
+        });
+      }
+    }
+
+    function toggleSelection(buttonElement, label) {
+      if (awaitingConfirm) return; // prevent toggling after confirming
+
+      if (confirmedSelections.includes(label)) {
+        // Unselect
+        confirmedSelections = confirmedSelections.filter(item => item !== label);
+        buttonElement.classList.remove("selected");
+      } else {
+        // Select
+        confirmedSelections.push(label);
+        buttonElement.classList.add("selected");
+      }
+
+      reviewText.innerText = `Selected: ${confirmedSelections.join(", ")}`;
+      gameoverText.innerText = "";
+    }
+
+    function confirmSelection() {
+      if (awaitingConfirm) return;
+
+      awaitingConfirm = true;
+      reviewText.innerText = `You confirmed: ${confirmedSelections.join(", ")}`;
+
+      if (arraysEqual(confirmedSelections, correctSequence)) {
+        setTimeout(() => {
+          reviewText.innerText = "Correct selection!";
+          loadPhase(phases[gamePhase].next());
+        }, 500);
+      } else {
+        gameoverText.innerText = `Incorrect selection. Correct order: ${correctSequence.join(", ")}`;
+        showTryAgain();
+      }
+    }
+
+    function singleSelect(label) {
+      reviewText.innerText = `You selected: ${label}`;
+
+      if (label === correctSequence[0]) {
+        setTimeout(() => {
+          reviewText.innerText = "Correct!";
+          loadPhase(phases[gamePhase].next());
+        }, 500);
+      } else if (label === "Restart Game") {
+        loadPhase("Phase1");
+      } else {
+        gameoverText.innerText = `Incorrect. Correct next step: ${correctSequence[0]}`;
+        showTryAgain();
+      }
+    }
+
+    function arraysEqual(a, b) {
+      if (a.length !== b.length) return false;
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) return false;
+      }
+      return true;
+    }
+
+    function showTryAgain() {
+      buttonContainer.innerHTML = "";
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.innerText = "Try Again";
+      btn.onclick = () => loadPhase(gamePhase);
+      buttonContainer.appendChild(btn);
+    }
+
+    // Initialize game
+    loadPhase("Phase1");
+  </script>
+<button class="utility-btn" onclick="window.open('NRPh algorithm.jpg', '_blank')">
+  View Algorithm
+</button>
+
+<p style="margin-top: 30px; font-size: 0.8em; color: #665;">Program Concept by Gurrea, Seth Laurence</p>
+</body>
+</html>
